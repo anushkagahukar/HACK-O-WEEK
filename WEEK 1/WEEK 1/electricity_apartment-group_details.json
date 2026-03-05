@@ -1,0 +1,129 @@
+{
+    "socioCat": {
+        "employees": 21,
+        "executives_knowledge-workers": 21,
+        "other": 8,
+        "intermidiate": 7,
+        "retired": 3,
+        "workers": 3,
+        "artisans_business-people": 2,
+        "students": 2
+    },
+    "dwelling type": {
+        "apartment": 67
+    },
+    "dwelling ownership": {
+        "renter": 47,
+        "home-owner": 16,
+        "group-renter": 4
+    },
+    "placeLocation": {
+        "city-centre/urban": 53,
+        "suburbs": 10,
+        "rural": 4
+    },
+    "yearHome": {
+        "1990-2012": 16,
+        "before_1949": 14,
+        "1961-1974": 11,
+        "after_2012": 11,
+        "1975-1990": 9,
+        "1949-1961": 6
+    },
+    "heating": {
+        "electricity": 67
+    },
+    "collective heating": {
+        "no": 61,
+        "yes": 6
+    },
+    "hasGaz": {
+        "no": 61,
+        "yes": 6
+    },
+    "billElec": {
+        "50-100 euros": 38,
+        "< 50 euros": 18,
+        "100-150 euros": 7,
+        "> 150 euros": 4
+    },
+    "billGaz": {
+        "don't_know": 67
+    },
+    "habitants": {
+        "total": {
+            "1": 31,
+            "2": 21,
+            "3": 11,
+            "5": 2,
+            "6": 1,
+            "13": 1
+        },
+        "0-4 years": {
+            "0": 60,
+            "1": 6,
+            "2": 1
+        },
+        "5-14 years": {
+            "0": 54,
+            "1": 10,
+            "2": 2,
+            "3": 1
+        },
+        "15-24 years": {
+            "0": 59,
+            "1": 4,
+            "2": 2,
+            "3": 1,
+            "12": 1
+        },
+        "25-65 years": {
+            "1": 36,
+            "2": 23,
+            "0": 8
+        },
+        "> 65 years": {
+            "0": 64,
+            "2": 2,
+            "1": 1
+        }
+    },
+    "appliances": {
+        "electric water-heater": {
+            "yes": 57,
+            "no": 10
+        },
+        "air-conditioner": {
+            "no": 53,
+            "yes": 14
+        },
+        "heat-pump": {
+            "no": 65,
+            "yes": 2
+        },
+        "PV panels": {
+            "no": 67
+        },
+        "double-glazed windows": {
+            "yes": 45,
+            "no": 22
+        },
+        "# of electric ovens": {
+            "1": 57,
+            "0": 6,
+            "2": 4
+        },
+        "# of dishwashers": {
+            "0": 41,
+            "1": 26
+        },
+        "# of washing machines": {
+            "1": 64,
+            "0": 3
+        },
+        "# of clothes driers": {
+            "0": 55,
+            "1": 12
+        }
+    }
+}

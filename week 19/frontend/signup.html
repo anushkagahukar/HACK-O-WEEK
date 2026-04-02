@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up | Admin Compliance Panel</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{min-height:100vh;display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);font-family:'Segoe UI',sans-serif}
+    .card{background:#fff;border-radius:12px;padding:36px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+    h2{text-align:center;color:#1a1a2e;margin-bottom:4px;font-size:1.5rem}
+    .subtitle{text-align:center;color:#888;font-size:.85rem;margin-bottom:24px}
+    label{display:block;font-size:.83rem;color:#444;margin-bottom:4px;font-weight:600}
+    input,select{width:100%;padding:10px 13px;border:1.5px solid #ddd;border-radius:8px;
+      font-size:.93rem;margin-bottom:14px;outline:none;transition:border .2s}
+    input:focus,select:focus{border-color:#0f3460}
+    .pass-wrap{position:relative}
+    .pass-wrap input{margin-bottom:4px}
+    .toggle-pass{position:absolute;right:12px;top:11px;cursor:pointer;color:#888;font-size:.78rem;user-select:none}
+    .strength{font-size:.75rem;margin-bottom:12px;height:16px}
+    .strength.weak{color:#c0392b}.strength.medium{color:#d68910}.strength.strong{color:#1e8449}
+    button[type=submit]{width:100%;padding:12px;background:linear-gradient(135deg,#0f3460,#533483);
+      color:#fff;border:none;border-radius:8px;font-size:1rem;cursor:pointer;font-weight:600;transition:opacity .2s;margin-top:4px}
+    button[type=submit]:hover{opacity:.88}
+    .alert{padding:10px 14px;border-radius:8px;font-size:.87rem;margin-bottom:14px;display:none}
+    .alert.error{background:#fdecea;color:#c0392b}
+    .alert.success{background:#eafaf1;color:#1e8449}
+    .footer-link{text-align:center;margin-top:18px;font-size:.85rem;color:#666}
+    .footer-link a{color:#0f3460;text-decoration:none;font-weight:600}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>📝 Create Account</h2>
+    <p class="subtitle">Admin Compliance Panel</p>
+    <div id="alert" class="alert"></div>
+    <form id="signupForm">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" placeholder="John Doe" required/>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="you@example.com" required/>
+
+      <label for="role">Role</label>
+      <select id="role">
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+
+      <label for="password">Password</label>
+      <div class="pass-wrap">
+        <input type="password" id="password" placeholder="Min 6 characters" oninput="checkStrength()" required/>
+        <span class="toggle-pass" onclick="togglePass('password',this)">Show</span>
+      </div>
+      <div class="strength" id="strengthMsg"></div>
+
+      <label for="confirm">Confirm Password</label>
+      <div class="pass-wrap">
+        <input type="password" id="confirm" placeholder="Re-enter password" required/>
+        <span class="toggle-pass" onclick="togglePass('confirm',this)">Show</span>
+      </div>
+
+      <button type="submit" id="signupBtn">Create Account</button>
+    </form>
+    <div class="footer-link">Already have an account? <a href="/index.html">Login</a></div>
+  </div>
+
+  <script>
+    function togglePass(id, el) {
+      const inp = document.getElementById(id);
+      inp.type = inp.type === 'password' ? 'text' : 'password';
+      el.textContent = inp.type === 'password' ? 'Show' : 'Hide';
+    }
+
+    function checkStrength() {
+      const val = document.getElementById('password').value;
+      const el = document.getElementById('strengthMsg');
+      if (!val) { el.textContent = ''; return; }
+      if (val.length < 6) { el.className = 'strength weak'; el.textContent = '⚠ Weak — too short'; }
+      else if (val.length < 10 || !/[0-9]/.test(val)) { el.className = 'strength medium'; el.textContent = '🔶 Medium — add numbers'; }
+      else { el.className = 'strength strong'; el.textContent = '✅ Strong password'; }
+    }
+
+    function showAlert(msg, type) {
+      const el = document.getElementById('alert');
+      el.textContent = msg; el.className = `alert ${type}`; el.style.display = 'block';
+    }
+
+    document.getElementById('signupForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const role = document.getElementById('role').value;
+      const password = document.getElementById('password').value;
+      const confirm = document.getElementById('confirm').value;
+
+      if (password !== confirm) return showAlert('Passwords do not match', 'error');
+      if (password.length < 6) return showAlert('Password must be at least 6 characters', 'error');
+
+      const btn = document.getElementById('signupBtn');
+      btn.textContent = 'Creating...'; btn.disabled = true;
+
+      try {
+        const res = await fetch('/api/auth/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, password, role })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showAlert('Account created! Redirecting to login...', 'success');
+          setTimeout(() => window.location.href = '/index.html', 1200);
+        } else {
+          showAlert(data.message || 'Signup failed', 'error');
+          btn.textContent = 'Create Account'; btn.disabled = false;
+        }
+      } catch {
+        showAlert('Server error. Is the backend running?', 'error');
+        btn.textContent = 'Create Account'; btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

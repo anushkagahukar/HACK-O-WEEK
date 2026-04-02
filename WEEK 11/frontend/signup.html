@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - WearSync Portal</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="auth-container" style="padding: 2rem 1rem;">
+        <div class="glass-panel auth-card fade-in" style="max-width: 600px;">
+            <div class="auth-header">
+                <h1>Create Account</h1>
+                <p>Join WearSync to track your health data</p>
+            </div>
+            
+            <div id="alert-box" class="alert"></div>
+
+            <form id="signup-form">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" class="form-control" placeholder="John Doe" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="form-control" placeholder="john@example.com" required>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" class="form-control" placeholder="25" min="1" max="120" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" class="form-control" required style="appearance: none;">
+                            <option value="" disabled selected>Select</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number (Secure)</label>
+                    <input type="tel" id="phone" class="form-control" placeholder="+1 234 567 8900" required>
+                    <small style="color: var(--success-color); font-size: 0.75rem; margin-top: 0.25rem; display: block;">
+                        <i class="fas fa-lock"></i> Encrypted End-to-End
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="password-container">
+                        <input type="password" id="password" class="form-control" placeholder="Create a strong password" required>
+                        <i class="fas fa-eye toggle-password" id="toggle-password-1" onclick="togglePasswordVisibility('password', 'toggle-password-1')"></i>
+                    </div>
+                    <!-- Password Strength Meter -->
+                    <div class="strength-meter">
+                        <div class="strength-meter-fill" id="strength-fill"></div>
+                    </div>
+                    <div class="strength-text" id="strength-text">Enter password</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <div class="password-container">
+                        <input type="password" id="confirm-password" class="form-control" placeholder="Confirm your password" required>
+                        <i class="fas fa-eye toggle-password" id="toggle-password-2" onclick="togglePasswordVisibility('confirm-password', 'toggle-password-2')"></i>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn" id="signup-btn">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a href="index.html">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/api.js"></script>
+    <script src="./js/auth.js"></script>
+</body>
+</html>

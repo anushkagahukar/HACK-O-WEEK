@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | Admin Compliance Panel</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460); font-family: 'Segoe UI', sans-serif; }
+    .card { background: #fff; border-radius: 12px; padding: 40px 36px; width: 100%; max-width: 400px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+    h2 { text-align: center; color: #1a1a2e; margin-bottom: 6px; font-size: 1.6rem; }
+    .subtitle { text-align: center; color: #888; font-size: 0.85rem; margin-bottom: 28px; }
+    label { display: block; font-size: 0.85rem; color: #444; margin-bottom: 5px; font-weight: 600; }
+    input { width: 100%; padding: 11px 14px; border: 1.5px solid #ddd; border-radius: 8px;
+      font-size: 0.95rem; margin-bottom: 18px; transition: border 0.2s; outline: none; }
+    input:focus { border-color: #0f3460; }
+    .pass-wrap { position: relative; }
+    .pass-wrap input { margin-bottom: 18px; }
+    .toggle-pass { position: absolute; right: 12px; top: 11px; cursor: pointer; color: #888; font-size: 0.8rem; }
+    button { width: 100%; padding: 12px; background: linear-gradient(135deg, #0f3460, #533483);
+      color: #fff; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer;
+      font-weight: 600; transition: opacity 0.2s; }
+    button:hover { opacity: 0.88; }
+    .alert { padding: 10px 14px; border-radius: 8px; font-size: 0.88rem; margin-bottom: 16px; display: none; }
+    .alert.error { background: #fdecea; color: #c0392b; }
+    .alert.success { background: #eafaf1; color: #1e8449; }
+    .footer-link { text-align: center; margin-top: 20px; font-size: 0.85rem; color: #666; }
+    .footer-link a { color: #0f3460; text-decoration: none; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>🔐 Compliance Panel</h2>
+    <p class="subtitle">Admin &amp; User Login</p>
+    <div id="alert" class="alert"></div>
+    <form id="loginForm">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="you@example.com" required />
+      <label for="password">Password</label>
+      <div class="pass-wrap">
+        <input type="password" id="password" placeholder="••••••••" required />
+        <span class="toggle-pass" onclick="togglePass()">Show</span>
+      </div>
+      <button type="submit" id="loginBtn">Login</button>
+    </form>
+    <div class="footer-link">No account? <a href="signup.html">Sign up</a></div>
+  </div>
+  <script>
+    function togglePass() {
+      const p = document.getElementById('password');
+      const t = document.querySelector('.toggle-pass');
+      p.type = p.type === 'password' ? 'text' : 'password';
+      t.textContent = p.type === 'password' ? 'Show' : 'Hide';
+    }
+
+    function showAlert(msg, type) {
+      const el = document.getElementById('alert');
+      el.textContent = msg; el.className = `alert ${type}`; el.style.display = 'block';
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('loginBtn');
+      btn.textContent = 'Logging in...'; btn.disabled = true;
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (data.success) {
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('user', JSON.stringify(data.user));
+          showAlert('Login successful! Redirecting...', 'success');
+          setTimeout(() => {
+            window.location.href = data.user.role === 'admin' ? '/admin.html' : '/user.html';
+          }, 800);
+        } else {
+          showAlert(data.message || 'Login failed', 'error');
+          btn.textContent = 'Login'; btn.disabled = false;
+        }
+      } catch {
+        showAlert('Server error. Is the backend running?', 'error');
+        btn.textContent = 'Login'; btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

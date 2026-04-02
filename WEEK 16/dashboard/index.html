@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VitalAlert™ | Real-Time Biometrics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="glass-panel main-header">
+            <div class="logo">
+                <div class="pulse-ring"></div>
+                <h1>VitalAlert™</h1>
+            </div>
+            <div class="status-bar">
+                <div class="status-badge" id="ws-status">
+                    <span class="dot disconnected"></span> Server Disconnected
+                </div>
+                <div class="status-badge" id="crypto-status">
+                    <span class="icon lock-icon">🔒</span> Encryption: Awaiting Key
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard -->
+        <main class="dashboard-grid">
+            
+            <!-- Left Panel: Live Stream feed -->
+            <section class="glass-panel monitor-panel">
+                <div class="panel-header">
+                    <h2>Live Biometric Stream</h2>
+                    <span class="device-id" id="lbl-device">Awaiting Device...</span>
+                </div>
+                
+                <div class="bpm-display">
+                    <div class="heart">❤️</div>
+                    <div class="bpm-value-container">
+                        <span id="live-bpm" class="bpm-number">--</span>
+                        <span class="bpm-unit">BPM</span>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-line"></div>
+                </div>
+            </section>
+
+            <!-- Right Panel: Alerts feed -->
+            <section class="glass-panel alerts-panel">
+                <div class="panel-header">
+                    <h2>Critical Alerts Log</h2>
+                    <span class="badge red animate-pulse">Live</span>
+                </div>
+                
+                <div class="alerts-feed" id="alerts-container">
+                    <div class="empty-state">
+                        All clear. Monitoring for anomalies...
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- The brain of the operation -->
+    <script src="app.js"></script>
+</body>
+</html>

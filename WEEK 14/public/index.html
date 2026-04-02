@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Wearable Data Dashboard</title>
+  
+  <!-- Add Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+  <div class="dashboard-container">
+    <header>
+      <h1>Secure Wearable Data Dashboard</h1>
+      <p>End-to-End Encrypted Data Pipeline Demo</p>
+    </header>
+    
+    <div class="panels-wrapper">
+      
+      <!-- Simulation Panel -->
+      <section class="panel simulation-panel">
+        <div class="panel-header">
+          <h2>Wearable Simulator</h2>
+          <span class="badge status-badge">Ready</span>
+        </div>
+        <p class="desc">Simulates a wearable device encrypting health data using CryptoJS (AES) locally before transmission.</p>
+        
+        <div class="data-preview" id="previewRaw">
+          <h4>Raw Payload (Plaintext)</h4>
+          <pre id="rawContent">{"heartRate": 0, "steps": 0}</pre>
+        </div>
+        
+        <div class="data-preview encrypted" id="previewEnc">
+          <h4>Ciphertext (Sending to Server)</h4>
+          <pre id="encContent">Waitings...</pre>
+        </div>
+        
+        <button id="btnSimulate" class="btn primary-btn">Generate & Encrypt Data</button>
+        <button id="btnSend" class="btn secondary-btn" disabled>Send to Secure Server</button>
+      </section>
+
+      <!-- Visualization Panel -->
+      <section class="panel visualization-panel">
+         <div class="panel-header">
+          <h2>Data Visualization</h2>
+          <button id="btnRefresh" class="btn outline-btn small">Refresh Grid</button>
+        </div>
+        <p class="desc">Fetches ciphertexts from the server and decrypts them locally to visualize heart rate data.</p>
+        
+        <div class="chart-container">
+          <canvas id="hrChart"></canvas>
+        </div>
+
+        <div class="logs-container">
+           <h4>Recent Database Records</h4>
+           <div id="logsContent" class="logs-content">
+              <!-- Logs inserted dynamically -->
+           </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Dependencies: CryptoJS & Chart.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>

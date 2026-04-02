@@ -1,0 +1,20 @@
+{
+  "name": "wearable-data-ingestion-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "client": "node testClient.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^17.4.0",
+    "express": "^5.2.1",
+    "sqlite3": "^6.0.1",
+    "ws": "^8.20.0"
+  }
+}
